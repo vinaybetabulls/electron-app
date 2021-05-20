@@ -168,7 +168,7 @@ function App() {
         }
       },
       {
-        Header: "Desired Vlaue/ Expected Value",
+        Header: "Desired Value/Expected Value",
         accessor: "desiredValue",
         Cell: (cellProps) => {
           return (

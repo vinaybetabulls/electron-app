@@ -21,7 +21,7 @@ const TableContainer = ({ columns, data }) => {
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <tr {...headerGroup.getHeaderGroupProps()} className="table-heading">
             {headerGroup.headers.map(column => (
               <th {...column.getHeaderProps()}>{column.render("Header")}</th>
             ))}
@@ -35,7 +35,7 @@ const TableContainer = ({ columns, data }) => {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                return <td {...cell.getCellProps()} className="table-body-content">{cell.render("Cell")}</td>
               })}
             </tr>
           )
