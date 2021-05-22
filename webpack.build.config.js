@@ -37,7 +37,7 @@ module.exports = {
   },
   target: 'electron-renderer',
   plugins: [
-    new HtmlWebpackPlugin({title: 'MITE'}),
+    new HtmlWebpackPlugin({title: 'MITE - My Integrated Test Environment - Demo'}),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional

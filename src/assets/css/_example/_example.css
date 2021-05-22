@@ -32,7 +32,6 @@ h1 {
 .float-child {
   width: 15%;
   float: left;
-  padding: 20px;
   border: 2px solid #e5e5e5;
   margin-right: 20px;
   overflow-x: auto;
@@ -41,7 +40,6 @@ h1 {
 .float-second-child {
   width: 85%;
   float: left;
-  padding: 20px;
   border: 2px solid #e5e5e5;
   overflow-x: auto;
   overflow-y: 100%;
@@ -64,4 +62,35 @@ h1 {
 }
 .MuiAutocomplete-root  {
   width: 245px !important;
+}
+.MuiOutlinedInput-notchedOutline {
+  border: none !important;
+}
+.MuiIconButton-root .MuiIconButton-label {
+  display: none !important;
+}
+.mite-title, .mite-nav-title {
+  padding-left: 1.25rem;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+.mite-nav-title {
+  background: #c0bfc0;
+  padding: 8px;
+  margin-top: 0;
+}
+.table-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #a1b5cd;
+  padding: 0;
+}
+.table-title h4 {
+  padding: 10px;
+  margin-bottom: 0;
+  background-color: transparent;
+}
+.MuiTreeView-root {
+  padding: 20px !important;
 }

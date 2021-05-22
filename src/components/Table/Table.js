@@ -4,11 +4,12 @@ import EditableCell from "../../utils/Editable";
 import styled from "styled-components";
 
 const Styles = styled.div`
-  padding: 1rem;
+  padding: 20px;
 
   table {
     border-spacing: 0;
     border: 1px solid black;
+    width: 100%;
 
     tr {
       :last-child {
@@ -17,7 +18,9 @@ const Styles = styled.div`
         }
       }
     }
-
+    th {
+      background-color: #EDF0F1
+    }
     th,
     td {
       margin: 0;
@@ -87,6 +90,10 @@ const Table = ({ columns, data, updateMyData, skipPageReset }) => {
   // Render the UI for your table
   return (
     <>
+    <div className="table-title">
+      <h4 className="mite-nav-title">System check to test</h4>
+      <h4 className="mite-nav-title">PTC ID: NEW ITEM</h4>
+    </div>
       <Styles>
         <table {...getTableProps()}>
           <thead>

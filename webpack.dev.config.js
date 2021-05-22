@@ -33,7 +33,7 @@ module.exports = {
   },
   target: 'electron-renderer',
   plugins: [
-    new HtmlWebpackPlugin({title: 'MITE'}),
+    new HtmlWebpackPlugin({title: 'MITE - My Integrated Test Environment - Demo'}),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     })

@@ -93,7 +93,7 @@ function App() {
 
   return (
     <div>
-      <h1>MITE Project!</h1>
+      <h1 className="mite-title">MITE Project!</h1>
       <div className="float-container">
         <div className="float-child">
           <CustomizedTreeView />
