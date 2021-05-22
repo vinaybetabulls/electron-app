@@ -50,10 +50,10 @@ const EditableCell = ({
 
   return (
     <>
-      {typeof value === "string" ? (
+      {value && typeof value === "string" ? (
         <span>{value}</span>
       ) : (
-        <Autocomplete valuess={value} onChange={onChange} onBlur={onBlur} />
+        <Autocomplete options={value} />
       )}
     </>
   );
