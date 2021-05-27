@@ -8,8 +8,87 @@ import EditableCell from "../utils/Editable";
 import { useTable, usePagination } from "react-table";
 
 function App() {
+  /** Test sequence */
+  const testSequenceValue = SampleData.testcase.TestCaseFormid.filter(
+    (testsuite) => testsuite.type === "Test Sequence"
+  );
+  const testSequenceDesiredValue = testSequenceValue
+    .map((val) => val.desiredValue.toString())
+    .filter((val) => val !== "");
+  testSequenceDesiredValue.unshift("desiredValue");
+
+  const testSequenceComments = testSequenceValue
+    .map((val) => val.comments)
+    .filter((val) => val !== "");
+  testSequenceComments.unshift("comments");
+  const testSequenceExtensions = testSequenceValue
+    .map((val) => val.extensions)
+    .filter((val) => val !== "");
+  testSequenceExtensions.unshift("extensions");
+
+  /** Post conditions */
+
+  const postCondtionValue = SampleData.testcase.TestCaseFormid.filter(
+    (testsuite) => testsuite.type === "Post Conditions"
+  );
+  const postCondistionDesiredValue = postCondtionValue
+    .map((val) => val.desiredValue)
+    .filter((val) => val !== "");
+  postCondistionDesiredValue.unshift("desiredValue");
+  const postCondistionComments = postCondtionValue
+    .map((val) => val.comments)
+    .filter((val) => val !== "");
+  postCondistionComments.unshift("comments");
+  const postCondistionExtensions = postCondtionValue
+    .map((val) => val.extensions)
+    .filter((val) => val !== "");
+  postCondistionExtensions.unshift("extensions");
+
+  /** pre condition */
+  const preCondtionValue = SampleData.testcase.TestCaseFormid.filter(
+    (testsuite) => testsuite.type === "Pre Conditions"
+  );
+  const preCondistionDesiredValue = preCondtionValue
+    .map((val) => val.desiredValue)
+    .filter((val) => val !== "");
+  preCondistionDesiredValue.unshift("desiredValue");
+
+  const preCondistionComments = preCondtionValue
+    .map((val) => val.comments)
+    .filter((val) => val !== "");
+  preCondistionComments.unshift("comments");
+  const preCondistionExtensions = preCondtionValue
+    .map((val) => val.extensions)
+    .filter((val) => val !== "");
+  preCondistionExtensions.unshift("extensions");
+
+  const testSequenceVal = SampleData.testcase.TestCaseFormid.map(
+    (testsuite) => {
+      if (testsuite.type === "Test Sequence") {
+        testsuite["desiredValuesArray"] = testSequenceDesiredValue;
+        testsuite["commentsArray"] = testSequenceComments;
+        testsuite["extensionsArray"] = testSequenceExtensions;
+      }
+      if (testsuite.type === "Post Conditions") {
+        testsuite["desiredValuesArray"] = postCondistionDesiredValue;
+        testsuite["commentsArray"] = postCondistionComments;
+        testsuite["extensionsArray"] = postCondistionExtensions;
+      }
+      if (testsuite.type === "Pre Conditions") {
+        testsuite["desiredValuesArray"] = preCondistionDesiredValue;
+        testsuite["commentsArray"] = preCondistionComments;
+        testsuite["extensionsArray"] = preCondistionExtensions;
+      }
+      return testsuite;
+    }
+  );
+
   const columns = React.useMemo(
     () => [
+      {
+        Header: "#",
+        accessor: "idHead",
+      },
       {
         Header: "Action",
         accessor: "action",
@@ -17,6 +96,7 @@ function App() {
       {
         Header: "Parameter / Service Type",
         accessor: "serviceType",
+        
       },
       {
         Header: "Parameter / Description",
@@ -24,30 +104,27 @@ function App() {
       },
       {
         Header: "Desired Value / Expected Value",
-        accessor: "desiredValue",
+        accessor: "desiredValuesArray",
       },
       {
         Header: "Extensions",
-        accessor: "extensions",
+        accessor: "extensionsArray",
       },
       {
         Header: "Additional Remarks",
-        accessor: "comments",
+        accessor: "commentsArray",
       },
     ],
     []
   );
 
-  const [data, setData] = React.useState(SampleData.TestCaseFormid);
+  const [data, setData] = React.useState(testSequenceVal);
   const [originalData] = React.useState(data);
   const updateMyData = (rowIndex, columnId, value) => {
-    console.log("value...value", value);
     // We also turn on the flag to not reset the page
     //setSkipPageReset(true)
     setData((old) =>
       old.map((row, index) => {
-        console.log("row...", row);
-        console.log("index..", index);
         if (index === rowIndex) {
           return {
             ...old[rowIndex],
@@ -103,6 +180,11 @@ function App() {
             columns={columns}
             data={data}
             updateMyData={updateMyData}
+            getRowProps={row => ({
+              style: {
+                background: row.index % 2 === 0 ? 'red' : 'white',
+              },
+            })}
           />
         </div>
       </div>

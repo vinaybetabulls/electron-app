@@ -94,3 +94,5 @@ h1 {
 .MuiTreeView-root {
   padding: 20px !important;
 }
+
+.specialChild::before { background-color: #e5e5e5; }

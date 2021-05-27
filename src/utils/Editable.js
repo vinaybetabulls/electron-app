@@ -3,15 +3,23 @@ import Autocomplete from "../components/Autocomplete/Autocomplete";
 
 const EditableCell = ({
   value: initialValue,
-  row: { index },
+  row: { index, original },
   column: { id },
   updateMyData, // This is a custom function that we supplied to our table instance
 }) => {
   // We need to keep and update the state of the cell normally
   const [value, setValue] = React.useState(initialValue);
 
-  console.log(value);
-  console.log("value type..", typeof value);
+  const changeColor = () => {
+  };
+
+  React.useEffect(() => {
+    const el2 = document.querySelectorAll(".specialChild");
+    el2.forEach((el)=>{
+      el.parentElement.parentNode.style.backgroundColor = "#c5c5c5";
+    })
+    
+  });
 
   function move(arr, old_index, new_index) {
     while (old_index < 0) {
@@ -33,13 +41,11 @@ const EditableCell = ({
   const onChange = (e) => {
     let arr = initialValue[e?.target?.value];
     initialValue.unshift(arr);
-    console.log("new arr..", initialValue);
     setValue(new Set(initialValue));
   };
 
   // We'll only update the external data when the input is blurred
   const onBlur = () => {
-    console.log("onblur", { index, id, value });
     updateMyData(index, id, value);
   };
 
@@ -47,13 +53,28 @@ const EditableCell = ({
   React.useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
-
+  
+  const getComponent = () => {
+    if (original.idHead === "#") {
+      return (
+        <div className="specialChild" onLoad={changeColor}>
+          {value}
+        </div>
+      );
+    } else {
+      return <span>{value}</span>;
+    }
+  };
   return (
     <>
-      {value && typeof value === "string" ? (
-        <span>{value}</span>
+      {typeof value !== "object" ? (
+        getComponent()
       ) : (
-        <Autocomplete options={value} />
+        <Autocomplete
+          options={value}
+          original={original}
+          actualValue={value[0]}
+        />
       )}
     </>
   );

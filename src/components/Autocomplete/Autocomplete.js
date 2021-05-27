@@ -1,12 +1,19 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import React from "react";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
-//const options = ['Option 1', 'Option 2'];
-
-export default function AutoComplete({options}) {
-  const [value, setValue] = React.useState(options[0]);
-  const [inputValue, setInputValue] = React.useState('');
+export default function AutoComplete({ options, original, actualValue }) {
+  const [value, setValue] = React.useState([]);
+  const [inputValue, setInputValue] = React.useState("");
+  const [autoCompleteOptions, setAutoCompleteOptions] = React.useState([])
+  React.useEffect(() => {
+    const test = original[actualValue];
+    const selectedVal = options.find((option) => option?.toString() === test?.toString());
+    setValue(selectedVal || "");
+    options.splice(0,1)
+    setAutoCompleteOptions(options)
+    
+  }, [options, actualValue, original]);
 
   return (
     <div>
@@ -20,7 +27,7 @@ export default function AutoComplete({options}) {
           setInputValue(newInputValue);
         }}
         id="controllable-states-demo"
-        options={options}
+        options={autoCompleteOptions}
         style={{ width: 300 }}
         renderInput={(params) => <TextField {...params} variant="outlined" />}
       />

@@ -8,25 +8,22 @@ const Styles = styled.div`
 
   table {
     border-spacing: 0;
-    border: 1px solid black;
     width: 100%;
 
     tr {
       :last-child {
         td {
-          border-bottom: 0;
+          border: 0;
         }
       }
     }
     th {
-      background-color: #EDF0F1
+      background-color: #edf0f1;
     }
     th,
     td {
       margin: 0;
       padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
 
       :last-child {
         border-right: 0;
@@ -46,6 +43,8 @@ const Styles = styled.div`
   }
 `;
 
+const defaultPropGetter = () => ({});
+
 const Table = ({ columns, data, updateMyData, skipPageReset }) => {
   // Set our editable cell renderer as the default Cell renderer
   const defaultColumn = {
@@ -60,6 +59,7 @@ const Table = ({ columns, data, updateMyData, skipPageReset }) => {
     getTableBodyProps,
     headerGroups,
     prepareRow,
+    getRowProps = defaultPropGetter,
     page,
     canPreviousPage,
     canNextPage,
@@ -75,6 +75,7 @@ const Table = ({ columns, data, updateMyData, skipPageReset }) => {
       columns,
       data,
       defaultColumn,
+      initialState: { setPageSize: 100, pageSize: 100, },
       // use the skipPageReset option to disable page resetting temporarily
       autoResetPage: !skipPageReset,
       // updateMyData isn't part of the API, but
@@ -83,6 +84,7 @@ const Table = ({ columns, data, updateMyData, skipPageReset }) => {
       // That way we can call this function from our
       // cell renderer!
       updateMyData,
+      getRowProps,
     },
     usePagination
   );
@@ -90,10 +92,10 @@ const Table = ({ columns, data, updateMyData, skipPageReset }) => {
   // Render the UI for your table
   return (
     <>
-    <div className="table-title">
-      <h4 className="mite-nav-title">System check to test</h4>
-      <h4 className="mite-nav-title">PTC ID: NEW ITEM</h4>
-    </div>
+      <div className="table-title">
+        <h4 className="mite-nav-title">System check to test</h4>
+        <h4 className="mite-nav-title">PTC ID: NEW ITEM</h4>
+      </div>
       <Styles>
         <table {...getTableProps()}>
           <thead>
@@ -111,10 +113,12 @@ const Table = ({ columns, data, updateMyData, skipPageReset }) => {
             {page.map((row, i) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <tr {...row.getRowProps(getRowProps(row))}>
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <>
+                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      </>
                     );
                   })}
                 </tr>
